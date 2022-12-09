@@ -7,7 +7,9 @@
 
 ## 2. 코드블록 입력
 - 코드 각 줄 앞에 공백 4칸 입력
-    ____코드 입력
+```    
+____코드 입력
+```
 - ` ``` `로 감싸기
 
 ```
@@ -32,4 +34,35 @@
 >인용하면 이렇게 됨
 >>이렇게
 >>>이렇게
+```
+
+</br>
+
+## 5. 접기/펼치기 입력
+<details markdown="1">
+<summary>접기/펼치기</summary>
+어케하는지 궁금하지?
+</details>
+```
+<details markdown="1">
+<summary>접기/펼치기</summary>
+어케하는지 궁금하지?
+</details>
+```
+
+</br>
+
+## 6. 특수문자 입력하기
+|특수문자|HTML Number|HTML Name|Description|
+|---|---|---|---|
+|~|&#126;||equivalency sign - tilde|
+
+</br>
+
+## 7. 표 입력하기
+6번 표 마크다운 문법
+```
+|특수문자|HTML Number|HTML Name|Description|
+|---|---|---|---|
+|~|&#126;||equivalency sign - tilde|
 ```
