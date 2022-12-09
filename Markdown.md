@@ -13,9 +13,9 @@ ____코드 입력
 - ` ``` `로 감싸기
 
 ```
-/```
+\```
 코드 입력
-/```
+\```
 ```
 
 </br>
@@ -58,11 +58,11 @@ ____코드 입력
 ### 6.1. 첫번째 방법: HTML Number 입력
 |특수문자|HTML Number|HTML Name|Description|
 |---|---|---|---|
-|~|&#126;||equivalency sign - tilde|
+|~|/&#126;||equivalency sign - tilde|
 ### 6.2. 두번째 방법: 백슬래쉬(/) 입력
-/~
+\~
 ```
-/~
+\~
 ```
 
 </br>
@@ -72,5 +72,5 @@ ____코드 입력
 ```
 |특수문자|HTML Number|HTML Name|Description|
 |---|---|---|---|
-|~|&#126;||equivalency sign - tilde|
+|~|\&#126;||equivalency sign - tilde|
 ```
