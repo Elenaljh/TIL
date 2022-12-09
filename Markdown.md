@@ -74,7 +74,7 @@
 |특수문자|HTML Number|HTML Name|Description|
 |---|---|---|---|
 |~|\&#126;||equivalency sign - tilde|
-### 6.2. 두번째 방법: 백슬래쉬(/) 입력
+### 6.2. 두번째 방법: 백슬래쉬(\) 입력
 \~
 ```
 \~
