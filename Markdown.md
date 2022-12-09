@@ -79,7 +79,7 @@
 </br>
 
 ## 8. 링크 걸기
-[네이버](www.naver.com)  
+[네이버](https://www.naver.com)  
 ~~~
-[네이버](www.naver.com)
+[네이버](https://www.naver.com)
 ~~~
