@@ -12,10 +12,10 @@ ____코드 입력
 ```
 - ` ``` `로 감싸기
 
-```
+```  
 ```
 코드 입력
-```
+```  
 ```
 
 </br>
@@ -44,7 +44,8 @@ ____코드 입력
 <details markdown="1">
 <summary>접기/펼치기</summary>
 어케하는지 궁금하지?
-</details>
+</details>  
+
 ```
 <details markdown="1">
 <summary>접기/펼치기</summary>
