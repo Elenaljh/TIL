@@ -126,11 +126,12 @@
     
     ```
     
-    Once you get it running, you will be prompted to click a link. Once you navigate to that webpage, try adding  `?name=[Your Name]`  to the base URL in your browser’s URL bar.
+    Once you get it running, you will be prompted to click a link. Once you navigate to that webpage, try adding  `?name=[Your Name]`  to the base URL in your browser’s URL bar. -> 이렇게 하면 `request.args.get("name", "world")`코드가 url에 입력한 이름을 읽어와서 웹페이지에 전달한다. 
     
 ### 2. Greet
--   Improving upon our program, we know that most users will not type arguments into the address bar. Instead, programmers rely upon users to fill out forms on web pages. Accordingly, we can modify index.html as follows:
-    
+#### [index.html] 발전시키기 -> hello,____을 출력하는 대신, 입력창과 버튼 만들어 이름 입력하게 하는 페이지로 전환. 
+-   Improving upon our program, we know that most users will not type arguments into the address bar. Instead, programmers rely upon users to fill out forms on web pages. Accordingly, we can modify __index.html__ as follows:
+     
     ```html
     <!DOCTYPE html>
     
@@ -149,11 +150,14 @@
     
     ```
     
-    Notice that a form is now created that takes the user’s name and then passes it off to a route called  `/greet`. `method = "get"`은 관리자페이지 -> Network -> preserve log check -> All -> 페이지 로드시 로그 최상단에 나타나는 파일 headers -> request method 보면 GET이라고 나오는데 그 GET을 의미하는게 맞음. 
+- Notice that a form is now created that takes the user’s name and then passes it off to a route called  `/greet` (-> `<form action="/greet">`로 구현함). `<form>` 태그의 action 속성은 폼 데이터(form data)를 서버로 보낼 때 해당 데이터가 도착할 URL을 명시합니다.
+- `method = "get"`은 관리자페이지 -> Network -> preserve log check -> All -> 페이지 로드시 로그 최상단에 나타나는 파일 headers -> request method 보면 GET이라고 나오는데 그 GET을 의미하는게 맞음. GET방식은 URL에 폼 데이터를 추가해 서버로 전달하는 방식으로, 보통 쿼리 문자열(query string)에 포함되어 전송되므로 길이의 제한이 있다.(ex. jihye가 /에서 /greet으로 GET방식으로 전달될 경우 /greet페이지의 형태: `example.com/greet?name=jihye`) 따라서 보안상 취약점이 존재하므로 중요한 데이터는 POST 방식을 사용한다. 또한 GET방식의 HTTP요청은 브라우저에 의해 캐시되어 저장된다. 
+- `<input placeholder="Name">`은 입력창 안의 옅은 회색 글씨로, 어떤 것을 입력해야할지 안내해주는 문구라고 생각하면 됨. 
+- `<input name="name">`: `id` 속성과 다르게 `name`속성은 page 영역에서 중복되어 사용이 가능하며, ** Form 객체(ex. input, radio, checkbox 등)에서 action에 해당하는 페이지에 전송하는 파라미터의 __key값으로 사용__한다. 즉 텍스트박스에 입력한 값은 (key:value) = (name:입력한 값)이 되어 /greet페이지로 전달된다. 
     
 -   Further, we can change  `app.py`  as follows:
     
-    ```
+    ```py
     # Adds a form, second route
     
     from flask import Flask, render_template, request
@@ -172,11 +176,11 @@
     
     ```
     
-    Notice that the default path will display a form for the user to input their name. The  `/greet`  route will pass the  `name`  to that web page.
+    Notice that the default path will display a _form_ for the user to input their name. The  `/greet`  route will pass the  `name`  to that web page.
     
 -   To finalize this implementation, you will need another template for  `greet.html`  as follows:
     
-    ```
+    ```html
     <!DOCTYPE html>
     
     <html lang="en">
@@ -196,10 +200,10 @@
 
 ## [Layout](https://cs50.harvard.edu/x/2023/notes/9/#layout)
 
--   Both of our web pages,  `index.html`  and  `greet.html`, have much of the same data. Wouldn’t it be nice to allow the body to be unique, but copy the same layout from page to page?
+-   Both of our web pages,  `index.html`  and  `greet.html`, have much of the same data. Wouldn’t it be nice to allow the body to be unique, but copy the same layout from page to page? -> 즉, 번거롭게 페이지 레이아웃 (`<head>`부분 등)을 모든 페이지마다 복붙하지 말고 페이지의 `<body>`부분만 쓸 수 있도록 구성해보자. 
 -   First, create a new template called  `layout.html`  and write code as follows:
     
-    ```
+    ```html
     <!DOCTYPE html>
     
     <html lang="en">
@@ -218,7 +222,7 @@
     
 -   Then, modify your  `index.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -236,7 +240,7 @@
     
 -   Finally, change  `greet.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -251,9 +255,10 @@
 ## [POST](https://cs50.harvard.edu/x/2023/notes/9/#post)
 
 -   You can imagine scenarios where it is not safe to utilize  `get`, as usernames and passwords would show up in the URL.
+- Post 방식은 폼 데이터를 별도로 첨부해 서버로 전달하는 방식이다. 이 경우 http 요청은 브라우저에 의해 캐시되지 않으므로, 브라우저 히스토리에도 남지 않는다. 또한, post 방식의 http요청에 의한 데이터는 쿼리 문자열과는 별도로 전송되기 때문에 입력한 데이터가 url에 뜨지 않고, 데이터의 길이에 대한 제한도 없으며 get 방식보다 보안성이 높다. 또한 Post 방식은 서버에 어떤 정보를 전달하는데도 쓰인다 (ex. 장바구니에 물건 추가, 데이터베이스에 정보 추가 등) (Get은 getting information만 가능. posting/sending information 불가)
 -   We can utilize the method  `post`  to help with this problem by modifying  `app.py`  as follows:
     
-    ```
+    ```py
     # Switches to POST
     
     from flask import Flask, render_template, request
@@ -272,13 +277,52 @@
     
     ```
     
-    Notice that  `POST`  is added to the  `/greet`  route, and that we use  `request.form.get`  rather than  `request.args.get`.
+    Notice that  `methods=["POST"]`  is added to the  `/greet`  route, and that we use  `request.form.get`  rather than  `request.args.get`.     
+
+	<details>
+	<summary> Flask의 request에 대해.. <summary/>
+
+	The docs describe the attributes available on the request object (from flask import request) during a request. In most common cases request.data will be empty because it's used as a fallback:
+
+	**request.data** Contains the incoming request data as string in case it came with a mimetype Flask does not handle.
+
+	**request.args**: the key/value pairs in the URL query string - 'GET'에 쓰임.
+	**request.form**: the key/value pairs in the body, from a HTML 'POST' form, or JavaScript request *that isn't JSON encoded*
+	**request.files**: the files in the body, which Flask keeps separate from form. HTML forms must use enctype=multipart/form-data or files will not be uploaded.
+	**request.values**: combined args and form, preferring args if keys overlap
+	**request.json**: *parsed JSON data*. The request must have the application/json content type, or use request.get_json(force=True) to ignore the content type.
+	All of these are **MultiDict** instances (*except for json*). You can access values using:
+
+	**request.form['name']**: use indexing if you know the key exists
+	**request.form.get('name')**: use get if the key might not exist
+	**request.form.getlist('name')**: use getlist if the key is sent multiple times and you want a list of values. get only returns the first value.
+	</details>
     
 -   This tells the server to look  _deeper_  in the virtual envelope and not reveal the items in  `post`  in the URL.
--   Still, this code can be advanced further by utilizing a single route for both  `get`  and  `post`. To do this, modify  `app.py`  as follows:
+- `post`로 보낸 정보는 url에 뜨지 않지만, 개발자도구 -> Network -> Payload에 들어가면 어떤 정보를 보냈는지 알 수 있다. 
+
+#### @app.route("/")과 @app.route("/greet") 합치기
+-   Still, this code can be advanced further by utilizing a single route for both  `get`  and  `post`. 
+	- 우선 `index.html` (이름 적어넣는 텍스트박스 있는 폼 페이지)를 다음과 같이 변경한다.
+	```html
+	{% extends "layout.html" %}
+
+	{% block body %}
+
+		<form action="/" method="post">
+			<input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
+		</form>
+
+	{% endblock %}
+	```
+	- `<form action="/greet">`에서 `<form action="/">`로 변경했다. 즉, 페이지의 정보를 /greet가 아니라 그 자신에게 제출한다는 것이다. 
+
+
+
+- then, modify  `app.py`  as follows:
     
-    ```
-    # Uses a single route
+    ```py
+    # Uses a single  route
     
     from flask import Flask, render_template, request
     
@@ -293,15 +337,25 @@
     
     ```
     
-    Notice that both  `get`  and  `post`  are done in a single routing. However,  `request.method`  is utilized to properly route based upon the type of routing requested by the user.
-    
+- Notice that both  `get`  and  `post`  are done in a single routing. (	`methods=["GET","POST"]`에서 GET과 POST의 순서는 관계없다.)However,  `request.method`  is utilized to properly route based upon the type of routing requested by the user.
+- `request.args`는 GET에서만 쓰인다.  POST를 쓰고 싶다면 `request.form`을 써야 한다.  
+- POST로 제출한 페이지에서 새로고침(새로고침 버튼이나 f5키)을 누르는 경우
+	```
+	The page that you're looking for used information that you entered.
+	Returning to that page might cause any action you took to be repeated.
+	Do you want to continue?
+	```
+	다음과 같은 경고문이 뜬다. 사람들이 실수로 같은 정보를 두 번 제출하지 않도록 막기 위함이다. (ex. 장바구니에 동일한 물건을 두 번 등록하는 경우)
+- 그러나 검색창에 커서를 놓고 enter키를 누르면 위와 같은 경고문이 나타나지 않는다. 대신 이런 방식으로 접근하면 default로 GET을 통해 페이지를 request하기 때문에 Hello, world 페이지 대신 이름을 입력하는 텍스트박스가 있는 창이 로드된다.  
+- 결론: 주소창을 통해 어떤 페이지의 URL에 접근하면 GET을 통해 접근하게 된다. 이게 default임. POST를 통해 접근하고 싶다면 새로고침버튼이나 f5키, 또는 개발자가 미리 고안한 방식으로만 접근해야 한다.  
 
-## [Frosh IMs](https://cs50.harvard.edu/x/2023/notes/9/#frosh-ims)
+
+## [Frosh IMs](https://cs50.harvard.edu/x/2023/notes/9/#frosh-ims) 
 
 -   Frosh IMs or  _froshims_  is a web application that allows students to register for intermural sports.
 -   Create a folder by typing  `mkdir froshims`  in the terminal window. Then, type  `cd froshims`  to browse to this folder. Within, create a directory called templates by typing  `mkdir templates`. Finally, type  `code app.py`  and write code as follows:
     
-    ```
+    ```py
     # Implements a registration form using a select menu
     
     from flask import Flask, render_template, request
@@ -332,17 +386,18 @@
     
     ```
     
-    Notice that a  `failure`  option is provided, such that a failure message will be displayed to the user if the  `name`  or  `sport`  field is not properly filled out.
+    Notice that a  `failure`  option is provided, such that a failure message will be displayed to the user if the  `name`  or  `sport`  field is not properly filled out. -> `if not request.form.get("name")`: 이름을 입력하지 않음 / `if request.form.get("sport") not in SPORTS`: 리스트에 없는 스포츠명을 입력함
+    - 주의: POST는 주로 양식 데이터를 제출하는데 사용된다. GET은 서버에 데이터를 전달하는 것을 허용하지 않은 메서드다. 따라서 `@app.route("/register")`이라고만 써버리면, 사용자가 입력한 정보(이름, 스포츠)를 서버에 전송할 수 없게 된다(default method가 GET이기 때문). 따라서 이런 경우, 양식을 제출할 때 405에러가 뜬다 (`405 Method not allowed`) 따라서 해당 코드는 `@app.route("/register", method=["POST"])`라고 써야 한다.  
     
 -   Next, create a file in the  `templates`  folder called  `index.html`  by typing  `code templates/index.html`  and write code as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
         <h1>Register</h1>
         <form action="/register" method="post">
-            <input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
+            <input autocomplete="off" autofocus name="name" placeholder="Name" required type="text">
             <select name="sport">
                 <option disabled selected>Sport</option>
                 {% for sport in sports %}
@@ -354,10 +409,22 @@
     {% endblock %}
     
     ```
+    - 주의: input 태그에 name 속성이 있는 것처럼, select(드롭다운 메뉴) 태그에도 name 속성이 있다. 이걸 잘 써줘야 함. 안그러면 오류난다. -> `input`에 사용자는 이름을 입력하게 되는데, `<input name="name">`을 쓰면 사용자가 입력한 이름을 `name`이라는 변수로 관리할 수 있게 된다. 마찬가지로 `select`를 통해 사용자는 스포츠명을 입력하게 되는데, `<select name="sport">`를 쓰면 사용자가 입력한 스포츠명을 `sport`라는 변수로 관리할 수 있다. 
+    - input태그의 `required` 속성은, 입력하지 않으면 다음단계로 넘어갈 수 없게 만드는, 필수항목을 만드는 속성이다.
+    - html에서 아래 코드는 드롭다운 박스를 만드는 코드이다.
+		```html
+		<select name="sport">
+			<option disabled selected>Sport</option>
+			<option value="Basketball">Basketball</option>
+			<option value="Soccer">Soccer</option>
+			<option value="Frisbee">Frisbee</option>
+		</select>
+		```  
+		여기에서 첫번째 옵션 코드는 default로 선택되어있는 빈칸이다.  +주의: 위와 같은 식으로 코드를 짜면 해킹위험이 있기 때문에 app.py에 `SPORTS = ["Basketball", "Soccer", "Frisbee"]` 리스트를 만든다. 대신 html파일에는 jinja 반복문을 이용해서 SPORTS 리스트를 입력해준다. 
     
 -   Next, create a file called  `layout.html`  by typing  `code templates/layout.html`  and write code as follows:
     
-    ```
+    ```html
     <!DOCTYPE html>
     
     <html lang="en">
@@ -374,7 +441,7 @@
     
 -   Fourth, create a file in templates called  `success.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -385,7 +452,7 @@
     
 -   Finally, create a file in templates called  `failure.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -396,7 +463,7 @@
     
 -   You can imagine how we might want to accept the registration of many different registrants. We can improve  `app.py`  as follows:
     
-    ```
+    ```py
     # Implements a registration form, storing registrants in a dictionary, with error messages
     
     from flask import Flask, redirect, render_template, request
@@ -445,11 +512,11 @@
     
     ```
     
-    Notice that a dictionary called  `REGISTRANTS`  is used to log the  `sport`  selected by  `REGISTRANTS[name]`. Also, notice that  `registrants=REGISTRANTS`  passes the dictionary on to this template.
+    Notice that a dictionary called  `REGISTRANTS`  is used to log the  `sport`  selected by  `REGISTRANTS[name]`. Also, notice that  `registrants=REGISTRANTS`  passes the dictionary on to this template. 또한 `SPORTS`는 일부러 app.py에 만든 것이다. 그 이유는 html파일에서 `<select>`에 일일히 종목명을 적으면 나중에 사람들이 관리자도구를 이용해서 html파일을 수정해서 자기가 원하는 스포츠 항목을 만들어내고 제출해버리는 불상사가 생길 수 있다. 이런 보안문제들을 예방하기 위해서 이런 리스트는 서버쪽에 만들어놓는다. 그리고 이렇게 한 다음에는 꼭 이 리스트를 넣고자 하는 페이지쪽의 코드에 포함시켜줘야 한다. -> `return render_template("index.html", sports=SPORTS)`
     
 -   Further, create a new template called  `registrants.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -474,14 +541,15 @@
     
     ```
     
-    Notice that  `{% for name in registrants %}...{% endfor %}`  will iterate through each of the registrants. Very powerful to be able to iterate on a dynamic web page!
+    Notice that  `{% for name in registrants %}...{% endfor %}`  will iterate through each of the registrants(=REGISTRANTS 딕셔너리 말하는거임). Very powerful to be able to iterate on a dynamic web page! +참고로 위 코드는 표(table)를 만드는 것이다.  
     
 -   Executing  `flask run`  and entering numerous names and sports, you can browse to  `/registrants`  to view what data has been logged.
 -   You now have a web application! However, there are some security flaws! Because everything is client-side, an adversary could change the HTML and  _hack_  a website. Further, this data will not persist if the server is shut down. Could there be some way we could have our data persist even when the server restarts?
 
 ## [Flask and SQL](https://cs50.harvard.edu/x/2023/notes/9/#flask-and-sql)
 
--   Just as we have seen how Python can interface with a SQL database, we can combine the power of Flask, Python, and SQL to create a web application where data will persist!
+-  모든 자료를 global dictionary(`REGISTRANTS`)에 저장하는 것은 좋지 않은 방법이다. 그 이유는 컴퓨터를 끄거나 vscode에서 ctrl+c를 눌러 Flask를 종료하는 경우 딕셔너리에 저장된 데이터들도 다 날라가기 때문이다. 따라서 csv 등 안정적인 데이터베이스에 자료를 저장하는 것이 좋다. 
+- Just as we have seen how Python can interface with a SQL database, we can combine the power of Flask, Python, and SQL to create a web application where data will persist!
 -   To implement this, you will need to take a number of steps.
 -   First, modify  `requirements.txt`  as follows:
     
@@ -493,7 +561,7 @@
     
 -   Modify  `index.html`  as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -508,7 +576,8 @@
     {% endblock %}
     
     ```
-    
+    - input태그의 `type="radio"`는 각 스포츠명의 왼쪽에 작은 동그라미를 생성해서 체크할 수 있게 하는 속성이다. 
+
 -   Modify  `layout.html`  as follows:
     
     ```
@@ -539,7 +608,7 @@
     
 -   Modify  `registrants.html`  to appear as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -549,7 +618,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Sport</th>
-                    <th></th>
+                    <th></th>  <!--나중에 deregister 버튼이 들어갈 자리임-->
                 </tr>
             </thead>
             <tbody>
@@ -575,7 +644,7 @@
     
 -   Finally, modify  `app.py`  as follows:
     
-    ```
+    ```py
     # Implements a registration form, storing registrants in a SQLite database, with support for deregistration
     
     from cs50 import SQL
@@ -631,6 +700,11 @@
     ```
     
     Notice that the  `cs50`  library is utilized. A route is included for  `register`  for the  `post`  method. This route will take the name and sport taken from the registration form and execute a SQL query to add the  `name`  and the  `sport`  to the  `registrants`  table. The  `deregister`  routes to a SQL query that will grab the user’s  `id`  and utilize that information to deregister this individual.
+- `if id`: '`id`가 존재한다면'이라는 뜻
+- `db = SQL("sqlite:///froshims.db")`: `froshims.db`라는 파일을 연다. 
+- `db.execute`: cs50 library의 SQL 함수임. 해킹을 대비한 data sanitize까지 다 해놓음. 위 함수는 'registrants'라는 2열짜리 표(name, sport)를 만든다. 
+- `db.execute("INSERT INTO registrants (name, sport) VALUES(?, ?)", name, sport)`: `?`는 placeholder이다. 각 ? 자리 안에 name과 sport가 들어간다. 
+
     
 -   You can read more in the  [Flask documentation](https://flask.palletsprojects.com/).
 
@@ -672,7 +746,7 @@
     
 -   Third, create a file in the  `templates`  folder called  `index.html`  that appears as follows:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -691,7 +765,7 @@
     
 -   Fourth, create a file called  `login.html`  and add the following code:
     
-    ```
+    ```html
     {% extends "layout.html" %}
     
     {% block body %}
@@ -709,7 +783,7 @@
     
 -   Finally, create a file in the  `login`  folder called  `app.py`  and write code as follows:
     
-    ```
+    ```py
     from flask import Flask, redirect, render_template, request, session
     from flask_session import Session
     
@@ -753,7 +827,7 @@
 -   Moving on to a final example of utilizing Flask’s ability to enable a session.
 -   We examined the following code for  `store`  in  `app.py`. The following code was shown:
     
-    ```
+    ```py
     from cs50 import SQL
     from flask import Flask, redirect, render_template, request, session
     from flask_session import Session
@@ -780,8 +854,8 @@
     def cart():
     
         # Ensure cart exists
-        if "cart" not in session:
-            session["cart"] = []
+        if "cart" not in session: #session: 딕셔너리에 불과함
+            session["cart"] = []  #cart:키, [](리스트):값
     
         # POST
         if request.method == "POST":
@@ -791,12 +865,30 @@
             return redirect("/cart")
     
         # GET
-        books = db.execute("SELECT * FROM books WHERE id IN (?)", session["cart"])
+        books = db.execute("SELECT * FROM books WHERE id IN (?)", session["cart"])  #session["cart"]:리스트 -> 리스트의 각 값을 콤마(,)로 나눠서 반환함(CS50 library 보면 나와있음)
         return render_template("cart.html", books=books)
     
     ```
     
-    Notice that  `cart`  is implemented using a list. Items can be added to this list using the  `Add to Cart`  buttons in  `books.html`. When clicking such a button, the  `post`  method is invoked, where the  `id`  of the item is appended to the  `cart`. When viewing the cart, invoking the  `get`  method, SQL is executed to display a list of the books in the cart.
+    Notice that  `cart`  is implemented using a list. Items can be added to this list using the  `Add to Cart`  buttons in  `books.html`. When clicking such a button, the  `post`  method is invoked, where the  `id`  of the item is appended to the  `cart`. When viewing the cart, invoking the  `get`  method, SQL is executed to display a list of the books in the cart.    +참고: session->각 세션은 해당 계정으로 로그인한 사람에게만 적용된다. 또한 각 세션이 언제 종료되는지는 개발자들이 정할 수 있다. 
+
+- Let's see `books.html`
+	```html
+	{% extends "layout.html" %}
+
+	{% block body %}
+
+		<h1>Books</h1>
+		{% for book in books %}
+			<h2>{{ book["title"] }}</h2>
+			<form action="/cart" method="post">
+				<input name="id" type="hidden" value="{{ book['id'] }}">
+				<button type="submit">Add to cart</button>
+			</form>
+		{% endfor %}
+
+	{% endblock %}
+	```
     
 
 ## [API](https://cs50.harvard.edu/x/2023/notes/9/#api)
@@ -805,7 +897,7 @@
 -   We looked at an example called  `shows`.
 -   Looking at  `app.py`, we saw the following:
     
-    ```
+    ```py
     # Searches for shows using Ajax
     
     from cs50 import SQL
@@ -825,7 +917,7 @@
     def search():
         q = request.args.get("q")
         if q:
-            shows = db.execute("SELECT * FROM shows WHERE title LIKE ? LIMIT 50", "%" + q + "%")
+            shows = db.execute("SELECT * FROM shows WHERE title LIKE ? LIMIT 50", "%" + q + "%") #SQL에서 %는 와일드카드이다. ?는 단순한 placeholder으로, %?%와 같이 쓸 수 없다.
         else:
             shows = []
         return render_template("search.html", shows=shows)
@@ -836,18 +928,19 @@
     
 -   Looking at  `search.html`, you’ll notice that it is very simple:
     
-    ```
+    ```html
     {% for show in shows %}
         <li>{{ show["title"] }}</li>
     {% endfor %}
-    
     ```
     
     Notice that it provides a bulleted list.
+    - 참고: 위의 `search.html`코드에 `{% extends "layout.html" %}`와 같은 코드가 없다. 위 코드는 단지 html코드의 조각일 뿐이다. -> 아무데나 넣어서 써먹기 좋음. 밑의 `index.html`코드를 보고 어떻게 `search.html`을 써먹는지 보자.
     
 -   Finally, looking at  `index.html`, notice that  _AJAX_  code is utilized to power the search:
+- 참고: AJAX = Asynchronous, JavaScript, XML
     
-    ```
+    ```html
     <!DOCTYPE html>
     
     <html lang="en">
@@ -878,6 +971,13 @@
     ```
     
     Notice an event listener is utilized to dynamically query the server to provide a list that matches the title provided. This will locate the  `ul`  tag in the HTML and modify the web page accordingly to include the list of the matches.
+    - `<script>태그`: 자바스크립트와 같은 클라이언트 사이드 스크립트(client-side scripts)를 정의할 때 사용. 여기서는 자바스크립트 정의할때 사용함. 
+    - `let input = document.querySelector('input');`: 변수 `input`정의. `document`는 페이지 전체를 의미. `querySelector('제어대상')`에서 제어대상에 들어갈 선택자는 _CSS 선택자_가 그대로 적용됨. CSS 선택자는 3가지로 html 태그, id, class임. 여기에서 제어대상으로 사용한 것은 html태그인 `input`이다. 선택자로 id와 class를 사용하고 싶다면 각자 #과 .를 앞에 써야 한다. ex) `document.querySelector('#demo')`
+    - `input.addEventListener('input', async function()`: `input`(이 경우 텍스트박스)에 어떤 변화가 생길때마다 `async function()`을 호출한다.
+    - `async function()`: [참고](https://joshua1988.github.io/web-development/javascript/js-async-await/) 교수님은 백그라운드에서 돌아가는 일 정의하는 함수... 라고 설명했음 대충..
+    - `let response = await fetch('/search?q=' + input.value);`: fetch는 '가져오다'라는 뜻이다. `fetch('/search?q=' + input.value)`는 `/search?q=찾는정보`페이지를 가져와라는 뜻이다. 
+    - `let shows = await response.text();`: `response.text()`가 실행될때까지 기다리자(`await`)라는 뜻 
+    - `document.querySelector('ul').innerHTML = shows;`: search the document, the whole web page, for 'ul' tag, and change its _inner HTML_(`<ul>`과 `</ul>`사이) to be that fragment of `<li>` of all of those matching shows(위에서 만든 `search.html`말임)
     
 -   You can read more in the  [AJAX documentation](https://api.jquery.com/category/ajax/).
 
@@ -887,7 +987,7 @@
 -   JSON is a very useful way of getting back data from the server.
 -   You can see this in action in the  `index.html`  we examined together:
     
-    ```
+    ```html
     <!DOCTYPE html>
     
     <html lang="en">
@@ -923,6 +1023,9 @@
     ```
     
     While the above may be somewhat cryptic, it provides a starting point for you to research JSON on your own to see how it can be implemented in your own web applications.
+    - `let html = '';`: 'html' is a variable which initialize to nothing. 
+    - `shows[id].title.replace('<','&lt;').replace('&', '&amp;'`: shows[id].title을 가져와서 위험한 특수문자(<, &)들을 안전한 문자로 바꿈. 
+    - `html += '<li>' + title + '</li>';`: html 변수에 하나의 리스트 조각 추가함. 
     
 -   You can read more in the  [JSON documentation](https://www.json.org/json-en.html).
 
