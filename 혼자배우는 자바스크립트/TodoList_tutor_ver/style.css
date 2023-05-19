@@ -1,0 +1,52 @@
+body{
+    margin:0;
+    background-image: url("images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+    background-color: white;
+    min-height: 100vh; /*vh: veiw height: 내가 보는 화면의 높이. 100vh: vh의 100%*/
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+
+.task-area{
+    border: 1px solid lightgray; /*task-area 윤곽선 설정 - 굵기, 색상*/
+
+}
+
+.task-tabs{
+    display: flex; /*3개의 탭을 가로로 나열하는 기능*/
+    border-bottom: 1px solid lightgray;
+    position: relative; /*이러면 under-line의 absolute position의 기준이 task-tabs가 됨*/
+}
+.task-tabs div{
+    padding: 1em; /*탭 사이 간격 조정*/
+}
+
+#under-line{
+    height: 4px;
+    background-color: pink;
+    position: absolute; /*유튜브 영상 참고*/
+    width: 65px;
+    left: 0px;
+    top: 52px;
+    padding: 0px;
+    transition: 0.5s;
+}
+
+.task{
+    display: flex; /*task 하위 <div>들을 가로로 나열하기*/
+    justify-content: space-between; /*task 하위 <div>들을 띄워놓기*/
+    padding: 1em; /*<div>들과 task영역의 간격 조정*/
+}
+
+.task-done{
+    text-decoration: line-through; /*취소선*/
+}
+
+.task-tabs{
+    cursor: pointer
+}
