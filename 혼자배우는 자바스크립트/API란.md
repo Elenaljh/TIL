@@ -101,7 +101,8 @@ https://api.newscatcherapi.com/v2/search?q=Apple&from=2021/12/15&countries=CA&pa
 - Postman 프로그램 이용하기
 #### Postman 이용법
 <img src = "https://i.esdrop.com/d/f/Hn3cQpRVXY/pAt7mn2cZn.jpg">
-<img src = "https://i.esdrop.com/d/f/Hn3cQpRVXY/SWP2A1z0mX.jpg">
+<img src = "https://i.esdrop.com/d/f/Hn3cQpRVXY/SWP2A1z0mX.jpg">    
+
 - 1, 2, 3: workspace 새로 만들기
 - 4: api 가져올 사이트 주소 입력 (GET으로 해야함)
 - 5. Authorization창의 key, value에  (ex.`x-api-key`)와 Sign up(Log in)할 때 미리 얻어둔 키값()을 입력한다.
