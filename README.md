@@ -3,6 +3,7 @@
 ### 0. 준비운동
 - 생활코딩 WEB1, WEB2(home server, domain name system, http, OAuth 2.0), 서버(HTTP, 인터넷, *리눅스+AWS(나중에)*)
 - 깃
+- web developer bootcamp 백엔드파트만 듣기
 ### 1. 프로젝트
 - 커뮤니티 게시판 (개인)
 - 학교 프로젝트
@@ -25,3 +26,7 @@
 ### 4. 언어, 프레임워크
 - JAVA: 이것이 자바다
 - Spring: [김영한님 강의](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
+### 5. 자격증
+- 정보처리기시
+- SQLD
+- Oracle (OCA(SQL, Admin1) -> OCP(+Admin2, 오라클인증교육))

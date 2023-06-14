@@ -7,13 +7,13 @@ public class ex16_비교연산자_문자열 {
 //		지금은 문자열 비교시 equals() 메서드를 사용하는것이 좋다는 것만 인지하면 됨
 		String str1 = "abc";
 		String str2 = new String("abc");
-
+		//boolean: %b
 		System.out.printf("\"abc\"==\"abc\" ? %b%n", "abc"=="abc");
 		System.out.printf(" str1==\"abc\" ? %b%n",    str1=="abc");
 		System.out.printf(" str2==\"abc\" ? %b%n",    str2=="abc");
-		System.out.printf("str1.equals(\"abc\") ? %b%n", str1.equals("abc"));
+		System.out.printf("str1.equals(\"abc\") ? %b%n", str1.equals("abc")); //str1=="abc"와 같음
 		System.out.printf("str2.equals(\"abc\") ? %b%n", str2.equals("abc")); 
 		System.out.printf("str2.equals(\"ABC\") ? %b%n", str2.equals("ABC"));
-		System.out.printf("str2.equalsIgnoreCase(\"ABC\") ? %b%n", str2.equalsIgnoreCase("ABC"));
+		System.out.printf("str2.equalsIgnoreCase(\"ABC\") ? %b%n", str2.equalsIgnoreCase("ABC")); //equalsIgnoreCase: 대소문자 무시하고 문자열비교
 	}
 }
