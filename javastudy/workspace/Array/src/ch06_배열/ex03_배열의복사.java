@@ -14,7 +14,7 @@ public static void main(String[] args) {
 		System.out.println("arr: " + Arrays.toString(arr));
 		
 		int[] arr2 = new int[arr.length];	// 복사해서 값을 넣을 배열
-		System.arraycopy(arr, 0, arr2 , 0, arr.length);
+		System.arraycopy(arr, 0, arr2, 0, arr.length);
 		
 		System.out.println("arr2: " + Arrays.toString(arr2));
 	}

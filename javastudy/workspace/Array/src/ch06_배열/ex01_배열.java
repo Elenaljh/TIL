@@ -30,7 +30,7 @@ public class ex01_배열 {
         score[k + 1] = 70; // score[2] = 70
         score[3] = 80;
         score[4] = 90;
-        
+        //score[5] //5번 인덱스는 없다!
 
 
         // for문으로 배열의 모든 요소를 출력한다.
@@ -39,7 +39,7 @@ public class ex01_배열 {
         }
         
         for(int x: score) {
-        	System.out.println(x);
+        	System.out.println(x); //
         }
         
 	}
