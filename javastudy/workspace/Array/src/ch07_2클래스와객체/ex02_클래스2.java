@@ -1,4 +1,4 @@
-package ch07.ch07_2클래스와객체;
+package ch07_2클래스와객체;
 
 import java.util.Scanner;
 
