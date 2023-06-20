@@ -3,6 +3,7 @@ package ch08_1상속;
 class Car extends Object{ //모든 클래스는 Object로부터 상속받는다.
     int speed;
     int id = 10;
+    String name;
 
     @Override //오버라이드 선언! - Object에게서 상속받은 toString의 내용 바꿈
     public String toString() {
@@ -20,6 +21,10 @@ class Car extends Object{ //모든 클래스는 Object로부터 상속받는다.
         this.id = id;
     }
 
+    public Car(int speed) {
+        this.speed = speed;
+    }
+
 }
 class SportsCar extends Car { //Car을 상속받음
     int id = 20;
@@ -33,7 +38,7 @@ class SportsCar extends Car { //Car을 상속받음
     void accelerate() {speed += 2;}
 
     public SportsCar(int speed, int id, int gear) {
-        super(); //Car의 기본생성자: public Car(){}만을 원함.
+        super(); //Car의 기본생성자인 public Car(){}이 꼭 있어야 함
         this.speed = speed;
         this.id = id;
     }
