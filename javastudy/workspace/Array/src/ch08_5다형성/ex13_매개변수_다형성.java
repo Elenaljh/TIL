@@ -1,4 +1,4 @@
-package ch08.ch08_5다형성;
+package ch08_5다형성;
 
 class Product {
 	int price;			// 제품의 가격

@@ -1,4 +1,4 @@
-package ch08.ch08_6추상클래스;
+package ch08_6추상클래스;
 
 public class ex14_추상클래스 {
 	public static void main(String args[]) {
@@ -20,7 +20,7 @@ public class ex14_추상클래스 {
 }
 
 abstract class Animal {
-	abstract void cry();
+	abstract void cry(); //선언부만 존재. 구현부는 없음({}괄호가 없음)
 	
 	void run() {
 		System.out.println("run!!!!!!!!!!");

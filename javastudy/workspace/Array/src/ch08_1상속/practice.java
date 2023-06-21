@@ -37,6 +37,7 @@ class SportsCar extends Car { //Car을 상속받음
     @Override
     void accelerate() {speed += 2;}
 
+    public SportsCar() {}
     public SportsCar(int speed, int id, int gear) {
         super(); //Car의 기본생성자인 public Car(){}이 꼭 있어야 함
         this.speed = speed;
@@ -46,8 +47,9 @@ class SportsCar extends Car { //Car을 상속받음
 public class practice {
 
     public static void main(String[] args) {
-        SportsCar car = new SportsCar(1, 2, 3);
-        car.printId();
+        Car car = new SportsCar();
+        //car.drive(); //불가능 - sportscar의 메서드 이용 불가
+        car.id = 20;
     }
 
 }
