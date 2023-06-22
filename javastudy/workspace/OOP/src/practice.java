@@ -1,12 +1,23 @@
+import java.util.*;
 public class practice {
     public static void main(String[] args) {
-        int[] score = {100, 94, 20, 53};
-        int sum = 0;
+        //스택으로 괄호검사
+        Scanner sc = new Scanner(System.in);
+        System.out.println("소괄호로 이루어진 문자를 입력하세요.(빈 문자열X)");
+        String s = sc.nextLine();
+        Stack<Character> st = new Stack<>();
 
-        for (int s : score) {
-            sum += s;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                st.push(s.charAt(i));
+            } else {
+                if (st.isEmpty()) {
+                    System.out.println("올바르지 않은 괄호");
+                    System.exit(0);
+                }
+                st.pop();
+            }
         }
-        float average = (float)sum/score.length;
-        System.out.printf("평균은 %.2f점 입니다\n",average);
+        System.out.println("올바른 괄호");
     }
 }
