@@ -24,7 +24,7 @@ class Person2 {
 		this.age = age;
 	}
 
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) { //equals 오버라이딩
 		if(obj instanceof Person2) {
 			Person2 tmp = (Person2)obj;
 			return name.equals(tmp.name) && age==tmp.age;
@@ -35,7 +35,7 @@ class Person2 {
 
 	public int hashCode() {
 		return Objects.hash(name, age);
-	}
+	} //hashcode 오버라이딩
 
 	public String toString() {
 		return name +":"+ age;

@@ -19,7 +19,7 @@ public class ex18_HashMap_iterator {
 			System.out.println("이름 : "+ e.getKey() + ", 점수 : " + e.getValue());
 		}
 
-		set = map.keySet();
+		set = map.keySet(); //이게 제일 효율적임 - 일단 키만 가져와서 값은 get메서드로 읽는것
 		System.out.println("참가자 명단 : " + set);
 
 		Collection values = map.values();

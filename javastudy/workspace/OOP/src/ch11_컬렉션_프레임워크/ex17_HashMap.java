@@ -4,7 +4,8 @@ import java.util.*;
 
 public class ex17_HashMap {
 	public static void main(String[] args) {
-		HashMap map = new HashMap();
+		Map<String, String> map = new HashMap<>(); //Map<키, 값> 이름 = 객체생성.
+		//HashMap map = new HashMap();
 		map.put("myId", "1234");
 		map.put("asdf", "1111");
 		map.put("asdf", "1234");
