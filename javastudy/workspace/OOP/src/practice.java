@@ -8,16 +8,17 @@ public class practice {
         Stack<Character> st = new Stack<>();
 
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
-                st.push(s.charAt(i));
+            char c = s.charAt(i);
+            if (c == '(') {
+                st.push(c);
+            } else if (st.isEmpty()) {
+                System.out.println("올바르지 않은 괄호");
+                System.exit(0);
             } else {
-                if (st.isEmpty()) {
-                    System.out.println("올바르지 않은 괄호");
-                    System.exit(0);
-                }
                 st.pop();
             }
         }
-        System.out.println("올바른 괄호");
+        if (st.isEmpty()) System.out.println("올바른 괄호");
+        else System.out.println("올바르지 않은 괄호");
     }
 }
