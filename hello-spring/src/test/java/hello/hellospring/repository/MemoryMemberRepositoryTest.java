@@ -1,9 +1,6 @@
 package hello.hellospring.repository;
-
 import hello.hellospring.domain.Member;
-
 import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
