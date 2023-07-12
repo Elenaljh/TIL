@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Member Form</title>
+</head>
+<body>
+<div class="container">
+    <form action="/members/new" method="post">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+<!--            이름 입력하고 등록 누르면 키가 name이고 값이 입력한 이름인 데이터가 서버로 넘어간다!-->
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div> <!--/container -->
+</body>
+</html>

@@ -33,16 +33,16 @@ class MemberServiceTest {
     //각 테스트는 다른 테스트와 의존관계 없이 독립적으로 실행되어야한다.(중요)
 
     @Test
-    void 회원가입_join() { //테스트명은 과감하게 한글로 써도 된다.
+    void 회원가입_join() { //테스트명은 과감하게 한글로 써도 된다., 정상적으로 기능하는지 확인은 하는데 중복회원이 존재하는 예외적 상황을 검증하지는 못함
         //1. given😊
         Member member = new Member();
         member.setName("Hello");
         //2.when😊
-        Long saveId = memberService.join(member);
+        Long saveId = memberService.join(member); //member을 repository에 저장하고 id 반환
         //3.then😊
-        Member findMember = memberService.findOne(saveId).get();
+        Member findMember = memberService.findOne(saveId).get(); // get()으로 optional 벗겨내서 member를 받아냄
         //memberService.findOne(saveId).get(); + ctrl+alt+V (= introduce variable)
-        assertThat(member.getName()).isEqualTo(findMember.getName()); //import static 쉽게하는법
+        assertThat(member.getName()).isEqualTo(findMember.getName()); //import static 쉽게하는법, Assertions: asserj를 import해야함
         //alt+Enter -> static 어쩌고 클릭
     }
 
@@ -61,12 +61,15 @@ class MemberServiceTest {
 //            memberService.join(member2); //동명이인을 join함 -> 오류가 터져야함
 //            fail();
 //        } catch (IllegalStateException e) {
-//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다."); //중복회원 감지했을 때 오류메세지 정상적으로 내보내는지 테스트
 //        } //try-catch보다 더 좋은 문법이 있음
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));//try-catch보다 더 좋은 문법
+        assertThrows(IllegalStateException.class, () -> memberService.join(member2));//try-catch보다 더 좋은 문법
+        // () -> memberService.join(member2) 로직을 실행했을 때 IllegalStateExeption이라는 예외가 나오는지 테스트하는 메소드임.
         // 코드 리팩토링(?): ctrl+alt+V
-        // ㄴjoin메서드에 member2집어넣었을 때 IllegalStateException 나오면 성공.
+        // join메서드에 member2집어넣었을 때 IllegalStateException 나오면 성공.
+
         // 이제 에러 문구도 잘 나오는지 테스트해보자
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
         //3. then😊

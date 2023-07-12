@@ -3,12 +3,14 @@ package hello.hellospring.service;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.domain.Member;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 import java.util.Optional;
 
-//Service는 비즈니스와 비슷한 용어를 쓰고 Repository는 보다 개발에 초점을 맞춘 용어를 쓴다.
-public class MemberService { //테스트 간편하게 하기: 클래스명에 커서 두고 ctrl+shift+t -> JUnit 선택...
+public class MemberService {
     private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
