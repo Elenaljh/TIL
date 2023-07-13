@@ -1,13 +1,25 @@
 package hello.hellospring;
 
+import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class SpringConfig {
+
+    private final DataSource dataSource;
+
+    @Autowired
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public MemberService memberService() {
@@ -17,10 +29,16 @@ public class SpringConfig {
 
     @Bean
     public MemberRepository memberRepository() {
-        return new MemoryMemberRepository(); //MemberRepository는 인터페이스. 인터페이스는 new로 객체생성X
+        //return new MemoryMemberRepository(); //MemberRepository는 인터페이스. 인터페이스는 new로 객체생성X
         // 따라서 구현체인 MemoryMemberRepository를 생성함.
+
+        //return new JdbcMemberRepository(dataSource);
+
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 
     //스프링 작동할 때: 우선 memberService와 memberRepository를 스프링 빈으로 등록, 그리고 등록된 repository를
     // memberService 안에 넣어준다.
+
+
 }
