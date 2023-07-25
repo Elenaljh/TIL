@@ -15,7 +15,7 @@ public class SingletonService {
     private static final SingletonService instance = new SingletonService();
 
     //2. public으로 열어서 객체 인스턴스가 필요하면 이 static 메서드를 통해서만 조회하도록 허용
-    private static SingletonService getInstance() {
+    public static SingletonService getInstance() {
         return instance;
     }
 
