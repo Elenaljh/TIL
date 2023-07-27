@@ -1,4 +1,4 @@
-package hello.core.filter;
+package hello.core.scan.filter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,8 +32,7 @@ public class ComponentFilterAppConfigTest {
             includeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyIncludeComponent.class),
             excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = MyExcludeComponent.class)
     )
-
-    static class ComponentFilterAppConfig {  //이거 작성하기 전까지 바로 위 코드 (@ComponentScan) 빨간줄 쳐졌었음. 왜?
+    static class ComponentFilterAppConfig {
 
     }
 }
