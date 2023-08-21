@@ -9,6 +9,8 @@
 - [ ] 학교 프로젝트
 ### 2. 코테 공부
 - [ ] [바킹독](https://blog.encrypted.gg/921)
+- [ ] [하루코딩 핵심이론](https://www.youtube.com/playlist?list=PLFgS-xIWwNVX-zm4m6suWC9d7Ua9z7fuT)
+- [ ] [하루코딩 실전문제풀이(Java)](https://www.youtube.com/playlist?list=PLFgS-xIWwNVU_qgeg7wz_aMCk22YppiC6)
 - [ ] [문제집](https://github.com/encrypted-def/basic-algo-lecture/blob/master/workbook.md)
 - 참고: 프로그래머스 lv3까지(백준 골드~까지는 풀어야한다)
 ### 3. CS공부
